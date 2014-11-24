@@ -279,29 +279,32 @@ let s:licenseTag = s:licenseTag . "along with this program; if not, write to the
 let s:licenseTag = s:licenseTag . "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\<enter>"
 
 " Common standard constants
+if !exists("g:DoxygenToolkit_pre")
+  let g:DoxygenToolkit_pre = "\\"
+endif
 if !exists("g:DoxygenToolkit_briefTag_pre")
-  let g:DoxygenToolkit_briefTag_pre = "@brief "
+  let g:DoxygenToolkit_briefTag_pre = g:DoxygenToolkit_pre . "brief "
 endif
 if !exists("g:DoxygenToolkit_briefTag_post")
   let g:DoxygenToolkit_briefTag_post = ""
 endif
 if !exists("g:DoxygenToolkit_templateParamTag_pre")
-  let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
+  let g:DoxygenToolkit_templateParamTag_pre = g:DoxygenToolkit_pre . "tparam "
 endif
 if !exists("g:DoxygenToolkit_templateParamTag_post")
   let g:DoxygenToolkit_templateParamTag_post = ""
 endif
 if !exists("g:DoxygenToolkit_paramTag_pre")
-  let g:DoxygenToolkit_paramTag_pre = "@param "
+  let g:DoxygenToolkit_paramTag_pre = g:DoxygenToolkit_pre . "param "
 endif
 if !exists("g:DoxygenToolkit_paramTag_post")
   let g:DoxygenToolkit_paramTag_post = ""
 endif
 if !exists("g:DoxygenToolkit_returnTag")
-  let g:DoxygenToolkit_returnTag = "@return "
+  let g:DoxygenToolkit_returnTag = g:DoxygenToolkit_pre . "return "
 endif
 if !exists("g:DoxygenToolkit_throwTag_pre")
-  let g:DoxygenToolkit_throwTag_pre = "@throw " " @exception is also valid
+  let g:DoxygenToolkit_throwTag_pre = g:DoxygenToolkit_pre . "throw " " @exception is also valid
 endif
 if !exists("g:DoxygenToolkit_throwTag_post")
   let g:DoxygenToolkit_throwTag_post = ""
@@ -316,25 +319,25 @@ if !exists("g:DoxygenToolkit_licenseTag")
   let g:DoxygenToolkit_licenseTag = s:licenseTag
 endif
 if !exists("g:DoxygenToolkit_fileTag")
-  let g:DoxygenToolkit_fileTag = "@file "
+  let g:DoxygenToolkit_fileTag = g:DoxygenToolkit_pre . "file "
 endif
 if !exists("g:DoxygenToolkit_authorTag")
-  let g:DoxygenToolkit_authorTag = "@author "
+  let g:DoxygenToolkit_authorTag = g:DoxygenToolkit_pre . "author "
 endif
 if !exists("g:DoxygenToolkit_dateTag")
-  let g:DoxygenToolkit_dateTag = "@date "
+  let g:DoxygenToolkit_dateTag = g:DoxygenToolkit_pre . "date "
 endif
 if !exists("g:DoxygenToolkit_versionTag")
-  let g:DoxygenToolkit_versionTag = "@version "
+  let g:DoxygenToolkit_versionTag = g:DoxygenToolkit_pre . "version "
 endif
 if !exists("g:DoxygenToolkit_undocTag")
   let g:DoxygenToolkit_undocTag = "DOX_SKIP_BLOCK"
 endif
 if !exists("g:DoxygenToolkit_blockTag")
-  let g:DoxygenToolkit_blockTag = "@name "
+  let g:DoxygenToolkit_blockTag = g:DoxygenToolkit_pre . "name "
 endif
 if !exists("g:DoxygenToolkit_classTag")
-  let g:DoxygenToolkit_classTag = "@class "
+  let g:DoxygenToolkit_classTag = g:DoxygenToolkit_pre . "class "
 endif
 
 if !exists("g:DoxygenToolkit_cinoptions")
@@ -537,7 +540,7 @@ function! <SID>DoxygenBlockFunc()
   let l:insertionMode = s:StartDocumentationBlock()
   exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_blockTag
   mark d
-  exec "normal o".s:interCommentTag."@{ ".s:endCommentTag
+  exec "normal o".s:interCommentTag.g:DoxygenToolkit_pre . "{ ".s:endCommentTag
   exec "normal o".strpart( s:startCommentTag, 0, 1 )
   exec "normal A".strpart( s:startCommentTag, 1 )." @} ".s:endCommentTag
   exec "normal `d"
